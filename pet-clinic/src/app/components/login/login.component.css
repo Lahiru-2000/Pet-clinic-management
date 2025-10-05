@@ -1,0 +1,49 @@
+/* Brown theme login page */
+.login-wrapper{
+  min-height: 100vh;
+  padding: 96px 0 40px 0; /* respect fixed navbar */
+  background: linear-gradient(135deg, #f7efe9 0%, #efe2db 100%);
+  display: flex;
+  align-items: center;
+}
+
+.login-card{
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+  overflow: hidden;
+}
+
+.login-hero{
+  background: linear-gradient(135deg, #a24a2a 0%, #853c22 100%);
+  color: #fff;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-hero h1{ font-weight: 800; margin-bottom: 12px; }
+.login-hero p{ opacity: .95; }
+
+.login-form{
+  padding: 48px;
+}
+
+.login-form h2{ color: #69230e; font-weight: 800; margin-bottom: 16px; }
+
+.btn-primary{
+  background: linear-gradient(135deg, #a24a2a 0%, #853c22 100%);
+  border: none;
+}
+
+.btn-primary:hover{ filter: brightness(1.05); }
+
+@media (max-width: 992px){
+  .login-card{ grid-template-columns: 1fr; }
+}

@@ -1,0 +1,325 @@
+
+<div class="admin-clients-container">
+
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="bi bi-people-fill me-3"></i>
+        User Management
+      </h1>
+      <p class="page-description">View all registered users </p>
+    </div>
+    <div class="header-actions">
+      <button 
+        class="btn btn-outline-primary btn-lg"
+        (click)="exportClients()"
+        [disabled]="isExporting">
+        <i class="bi bi-download me-2"></i>
+        <span *ngIf="!isExporting">Export</span>
+        <span *ngIf="isExporting">Exporting...</span>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="filters-section">
+    <div class="filters-header">
+      <h3>
+        <i class="bi bi-funnel me-2"></i>
+        Filters & Search
+      </h3>
+      <button 
+        class="btn btn-outline-secondary"
+        (click)="clearFilters()"
+        [disabled]="isLoading">
+        <i class="bi bi-x-circle me-1"></i>
+        Clear All
+      </button>
+    </div>
+    
+    <div class="filters-grid">
+
+      <div class="filter-group">
+        <label class="form-label">Search Users</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-search"></i>
+          </span>
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Search by name or email..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange()">
+        </div>
+      </div>
+
+
+      <div class="filter-group">
+        <label class="form-label">User Type</label>
+        <select 
+          class="form-select" 
+          [(ngModel)]="selectedIsAdmin"
+          (change)="applyFilters()">
+          <option [ngValue]="null">All Users</option>
+          <option [ngValue]="true">Admins</option>
+          <option [ngValue]="false">Clients</option>
+        </select>
+      </div>
+
+
+
+      <div class="filter-group">
+        <label class="form-label">Registration Date From</label>
+        <input 
+          type="date" 
+          class="form-control" 
+          [(ngModel)]="registrationDateFrom"
+          (change)="applyFilters()">
+      </div>
+
+      <div class="filter-group">
+        <label class="form-label">Registration Date To</label>
+        <input 
+          type="date" 
+          class="form-control" 
+          [(ngModel)]="registrationDateTo"
+          (change)="applyFilters()">
+      </div>
+    </div>
+  </div>
+
+  <div class="results-summary">
+    <div class="summary-info">
+      <span class="results-count">
+        Showing {{ filteredClients.length }} of {{ totalItems }} users
+      </span>
+      <span class="page-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading users...</span>
+      </div>
+      <p class="loading-text">Loading users...</p>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Registered</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of filteredClients; index as i">
+          <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+          <td>{{ client.name }}</td>
+          <td>{{ client.email }}</td>
+          <td>
+            <span [class]="getStatusBadgeClass(client.isAdmin)">
+              {{ getStatusText(client.isAdmin) }}
+            </span>
+          </td>
+          <td>{{ formatDate(client.registrationDate) }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button class="btn btn-outline-primary btn-sm" (click)="openEditModal(client)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(client)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div *ngIf="!isLoading && filteredClients.length === 0" class="empty-state">
+    <div class="empty-state-content">
+      <i class="bi bi-people empty-state-icon"></i>
+      <h3>No users found</h3>
+      <p>There are no users matching your current filters.</p>
+      <button 
+        class="btn btn-primary"
+        (click)="clearFilters()">
+        Clear Filters
+      </button>
+    </div>
+  </div>
+
+
+  <div *ngIf="!isLoading && filteredClients.length > 0" class="pagination-container">
+    <nav aria-label="User pagination">
+      <ul class="pagination pagination-lg justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="onPageChange(1)" [class.disabled]="currentPage === 1">
+            <i class="bi bi-chevron-double-left"></i>
+          </a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="onPageChange(currentPage - 1)" [class.disabled]="currentPage === 1">
+            <i class="bi bi-chevron-left"></i>
+          </a>
+        </li>
+        
+        <li 
+          *ngFor="let page of paginationPages" 
+          class="page-item" 
+          [class.active]="page === currentPage">
+          <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+        </li>
+        
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="onPageChange(currentPage + 1)" [class.disabled]="currentPage === totalPages">
+            <i class="bi bi-chevron-right"></i>
+          </a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="onPageChange(totalPages)" [class.disabled]="currentPage === totalPages">
+            <i class="bi bi-chevron-double-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+
+<div class="modal fade" [class.show]="showEditModal" [style.display]="showEditModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="bi bi-pencil me-2"></i>
+          Edit User: {{ currentClient?.name }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeEditModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="currentClient">
+          <div class="row">
+    
+            <div class="col-md-6">
+              <h6 class="section-title">Basic Information</h6>
+              
+              <div class="mb-3">
+                <label class="form-label">Full Name *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  [(ngModel)]="editForm.name"
+                  name="editName"
+                  required>
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Email Address *</label>
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  [(ngModel)]="editForm.email"
+                  name="editEmail"
+                  required>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <h6 class="section-title">User Status</h6>
+              
+              <div class="mb-3">
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    [(ngModel)]="editForm.isAdmin"
+                    name="editIsAdmin"
+                    id="editIsAdmin">
+                  <label class="form-check-label" for="editIsAdmin">
+                    Admin User
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeEditModal()">
+          Cancel
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-primary"
+          (click)="updateClient()"
+          [disabled]="isUpdating || !isValidEditForm()">
+          <span *ngIf="isUpdating">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Updating...
+          </span>
+          <span *ngIf="!isUpdating">
+            <i class="bi bi-check-circle me-2"></i>
+            Update User
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          Delete User
+        </h5>
+        <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          <strong>Warning:</strong> This action cannot be undone.
+        </div>
+        <p>Are you sure you want to delete user <strong>{{ currentClient?.name }}</strong>?</p>
+        <p class="text-muted">This will also remove all associated data including:</p>
+        <ul class="text-muted">
+          <li>User account</li>
+          <li>Pet ownership records</li>
+          <li>Visit history</li>
+          <li>All associated data</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteClient()">
+          <i class="bi bi-trash me-2"></i>
+          Delete User
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div 
+  class="modal-backdrop fade" 
+  [class.show]="showEditModal || showDeleteModal || showDetailsModal"
+  *ngIf="showEditModal || showDeleteModal || showDetailsModal">
+</div> 

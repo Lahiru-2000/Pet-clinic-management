@@ -1,0 +1,13 @@
+.btn-primary { background: linear-gradient(135deg, #a24a2a 0%, #853c22 100%); border: none; }
+.btn-outline-primary { color: #a24a2a; border-color: #a24a2a; }
+.btn-outline-primary:hover { background: #a24a2a; color: #fff; }
+.text-primary { color: #a24a2a !important; }
+.form-check-input:checked { background-color: #a24a2a; border-color: #a24a2a; }
+
+/* Mobile-friendly footer buttons */
+.card-footer .btn { min-width: 180px; }
+@media (max-width: 576px) {
+  .card-footer .d-flex { flex-direction: column; gap: 0.75rem; }
+  .card-footer .btn { width: 100%; min-width: unset; }
+}
+
