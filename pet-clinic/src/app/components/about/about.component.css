@@ -1,0 +1,108 @@
+.about h3{
+  font-size: 36px;
+  font-weight: 800;
+  color: #69230e;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.about h3::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 150px;
+  height: 3px;
+  background: #69230e;
+}
+
+.about-illustration{
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 14px 40px rgba(2, 6, 23, 0.18);
+}
+
+.title a {
+  font-size: 18px;
+  color: #4b7dab;
+  margin-bottom: 15px;
+  text-decoration: none;
+}
+
+.about { padding-top: 96px; }
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-bg {
+  background-color: #f1f7fd;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  color: #69230e;
+}
+
+.section-title h2::before { display: none; }
+
+.section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 150px;
+  height: 3px;
+  background: #69230e;
+  bottom: 0;
+  left: calc(50% - 75px);
+}
+
+.section-title p {
+  margin-bottom: 0;
+}
+
+.icon-boxes .icon-box{
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: start;
+  gap: 12px 16px;
+  padding: 18px 16px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.08);
+  margin-bottom: 12px;
+}
+
+.icon-boxes .icon{
+  color: #0ea5e9;
+  font-size: 22px;
+  line-height: 1;
+  grid-column: 1;
+}
+
+.icon-boxes .title{
+  grid-column: 2;
+  margin: 0;
+}
+
+.icon-boxes .title a{
+  color: #0b1736;
+}
+
+.icon-boxes .description{
+  grid-column: 2;
+  margin: 4px 0 0 0;
+}
+

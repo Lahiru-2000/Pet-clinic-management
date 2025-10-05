@@ -1,0 +1,45 @@
+<div class="signup-wrapper">
+  <div class="signup-card">
+    <div class="signup-hero">
+      <h1>Create your account</h1>
+      <p>Join Rajarata Pet Clinic to manage your pets and appointments.</p>
+    </div>
+    <div class="signup-form bg-white">
+  <h2>Sign Up</h2>
+  <form (ngSubmit)="onSubmit()" #signupForm="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="firstName" class="form-label">First name</label>
+        <input type="text" class="form-control" id="firstName" required [(ngModel)]="firstName" name="firstName" />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="lastName" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="lastName" required [(ngModel)]="lastName" name="lastName" />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" required [(ngModel)]="email" name="email" />
+    </div>
+
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone number</label>
+      <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 000-0000" required [(ngModel)]="phone" name="phone" />
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" required [(ngModel)]="password" name="password" />
+    </div>
+
+    <div class="mb-3">
+      <label for="confirmPassword" class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" id="confirmPassword" required [(ngModel)]="confirmPassword" name="confirmPassword" />
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" [disabled]="!signupForm.form.valid">Sign Up</button>
+  </form>
+    </div>
+  </div>
+</div>

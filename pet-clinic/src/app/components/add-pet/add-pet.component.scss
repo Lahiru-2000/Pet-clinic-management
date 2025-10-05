@@ -1,0 +1,13 @@
+.container { background-color: #f8f3ef; }
+
+.card { border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+
+.card-header.bg-primary { background: linear-gradient(135deg, #a24a2a 0%, #853c22 100%) !important; }
+
+.form-control, .form-select { border: 1px solid #e0e6ed; border-radius: 8px; transition: all 0.2s ease; }
+.form-control:focus, .form-select:focus { border-color: #a24a2a; box-shadow: 0 0 0 0.2rem rgba(162, 74, 42, 0.25); }
+
+.btn-primary { background: linear-gradient(135deg, #a24a2a 0%, #853c22 100%); border: none; }
+.btn-primary:hover { background: linear-gradient(135deg, #8f3f23 0%, #713019 100%); }
+.btn-secondary { border-color: #6c757d; }
+

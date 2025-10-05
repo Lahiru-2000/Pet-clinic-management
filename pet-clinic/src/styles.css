@@ -1,0 +1,131 @@
+@import '~ngx-toastr/toastr.css';
+
+/* Brown theme overrides for notification toasts and badges */
+.toast-info,
+.toast-success,
+.toast-warning,
+.toast-error {
+  border-radius: 8px;
+}
+#toast-container > .toast-info,
+.toast.toast-info {
+  background-color: #f3e3d9 !important; /* light brown */
+  color: #5b4640 !important;
+  border-left: 6px solid #a24a2a !important;
+}
+.toast-info .toast-title { color: #a24a2a !important; }
+.toast-info .toast-message { color: #5b4640 !important; }
+.badge.bg-primary,
+.text-primary,
+.btn.btn-primary:disabled {
+  color: #a24a2a !important;
+}
+
+/* Global brown theme - replace Bootstrap primary blues */
+:root {
+  --brown-50: #f7efe9;
+  --brown-100: #efe2db;
+  --brown-200: #e3cfc2;
+  --brown-300: #d6b6a3;
+  --brown-400: #c99a84;
+  --brown-500: #a24a2a; /* primary */
+  --brown-600: #8f3f23;
+  --brown-700: #713019;
+  --brown-800: #5b2413;
+}
+
+.btn-primary, .bg-primary { background-color: var(--brown-500) !important; border-color: var(--brown-500) !important; }
+.btn-primary:hover { background-color: var(--brown-600) !important; border-color: var(--brown-600) !important; }
+.btn-outline-primary { color: var(--brown-500) !important; border-color: var(--brown-500) !important; }
+.btn-outline-primary:hover { background-color: var(--brown-500) !important; color: #fff !important; }
+
+.text-primary { color: var(--brown-500) !important; }
+.border-primary { border-color: var(--brown-500) !important; }
+.bg-info, .alert-info { background-color: var(--brown-50) !important; color: #5b4640 !important; border-color: var(--brown-100) !important; }
+.badge.bg-primary { background-color: var(--brown-500) !important; }
+
+/* Tabs and links */
+.nav-tabs .nav-link.active { border-color: var(--brown-500) !important; color: var(--brown-500) !important; }
+.nav-tabs .nav-link:hover { color: var(--brown-500) !important; }
+
+/* Forms focus */
+input:focus, select:focus, textarea:focus, .form-control:focus, .form-select:focus { border-color: var(--brown-500) !important; box-shadow: 0 0 0 0.2rem rgba(162, 74, 42, 0.25) !important; }
+
+/* Progress and spinners */
+.spinner-border.text-primary { color: var(--brown-500) !important; }
+.progress-bar.bg-primary { background-color: var(--brown-500) !important; }
+
+/* Links */
+a, a:hover { color: var(--brown-600); }
+
+/* Prevent fixed navbar from overlapping page content */
+html, body { margin: 0; }
+body { padding-top: 120px; }
+
+@media (max-width: 1199.98px) {
+  body { padding-top: 104px; }
+}
+
+@media (max-width: 991.98px) {
+  body { padding-top: 96px; }
+}
+
+@media (max-width: 575.98px) {
+  body { padding-top: 80px; }
+}
+
+/* Explicit spacer after header for cases where body padding is overridden by component styles */
+.nav-spacer { height: 120px; }
+
+@media (max-width: 1199.98px) { .nav-spacer { height: 104px; } }
+@media (max-width: 991.98px)  { .nav-spacer { height: 96px; } }
+@media (max-width: 575.98px)  { .nav-spacer { height: 80px; } }
+
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-bg {
+  background-color: #f1f7fd;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  color: #2c4964;
+}
+
+.section-title h2::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #ddd;
+  bottom: 1px;
+  left: calc(50% - 60px);
+}
+
+.section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #1977cc;
+  bottom: 0;
+  left: calc(50% - 20px);
+}
+
+.section-title p {
+  margin-bottom: 0;
+}

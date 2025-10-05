@@ -1,0 +1,246 @@
+
+<div class="sidebar-overlay" *ngIf="isMobile && isSidebarOpen" (click)="closeSidebar()"></div>
+
+<header class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a class="navbar-brand" routerLink="#">
+      <i class="bi bi-heart-pulse me-2"></i>
+      Rajarata Pet Clinic
+    </a>
+    
+
+    <button 
+      class="navbar-toggler" 
+      type="button" 
+      (click)="toggleSidebar()"
+      aria-controls="navbarNav"
+      aria-expanded="false" 
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav me-3" *ngIf="!isMobile || !isSidebarOpen">
+        <li class="nav-item">
+          <i class="fa-solid fa-user"></i>
+          <a class="nav-link" routerLink="/user-profile">
+            <i class="bi bi-person-circle me-2"></i>
+            {{ username || 'User Name' }}
+            <span *ngIf="isAdmin" class="badge bg-warning text-dark ms-2">Admin</span>
+          </a>
+        </li>
+      </ul>
+      <div *ngIf="!isMobile || !isSidebarOpen" class="d-flex">
+        <a (click)="signOut()" class="btn btn-primary appointment-btn loginBtn">
+          <i class="bi bi-box-arrow-right me-2"></i>
+          Sign Out
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ADMIN SIDEBAR -->
+<aside 
+  id="sidebar" 
+  class="sidebar admin-sidebar" 
+  *ngIf="isAdmin"
+  [class.sidebar-open]="isSidebarOpen"
+  [class.sidebar-mobile]="isMobile"
+>
+  <ul class="sidebar-nav" id="sidebar-nav">
+    
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/dashboard" (click)="closeSidebar()">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard Overview</span>
+      </a>
+    </li>
+
+
+    <li class="nav-item">
+      <a class="nav-link" (click)="toggleAppointmentMgmt()">
+        <i class="bi bi-calendar-check"></i>
+        <span>Appointment Management</span>
+        <i class="bi bi-chevron-down ms-auto" [class.bi-chevron-up]="!isAppointmentMgmtCollapsed"></i>
+      </a>
+      <ul class="nav-content" [ngClass]="{ 'collapse': true, 'show': !isAppointmentMgmtCollapsed }">
+        <li>
+          <a routerLink="/admin/appointments" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>View All Appointments</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/appointments/add" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>Add New Appointment</span>
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/pets/all" (click)="closeSidebar()">
+        <i class="bi bi-heart"></i>
+        <span>Pet Records</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/clients" (click)="closeSidebar()">
+        <i class="bi bi-people"></i>
+        <span>Client Management</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" (click)="toggleStaffMgmt()">
+        <i class="bi bi-person-badge"></i>
+        <span>Staff Management</span>
+        <i class="bi bi-chevron-down ms-auto" [class.bi-chevron-up]="!isStaffMgmtCollapsed"></i>
+      </a>
+      <ul class="nav-content" [ngClass]="{ 'collapse': true, 'show': !isStaffMgmtCollapsed }">
+        <li>
+          <a routerLink="admin/doctors" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>View Doctors</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/doctors/add" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>Add New Doctor</span>
+          </a>
+        </li>
+      
+      </ul>
+    </li>
+
+ 
+    <li class="nav-item">
+      <a class="nav-link" (click)="toggleServiceMgmt()">
+        <i class="bi bi-tools"></i>
+        <span>Services Management</span>
+        <i class="bi bi-chevron-down ms-auto" [class.bi-chevron-up]="!isServiceMgmtCollapsed"></i>
+      </a>
+      <ul class="nav-content" [ngClass]="{ 'collapse': true, 'show': !isServiceMgmtCollapsed }">
+        <li>
+          <a routerLink="/admin/services/all" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>View All Services</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="admin/services/add" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>Add New Service</span>
+          </a>
+        </li>
+        
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" (click)="toggleBilling()">
+        <i class="bi bi-receipt"></i>
+        <span>Billing & Invoices</span>
+        <i class="bi bi-chevron-down ms-auto" [class.bi-chevron-up]="!isBillingCollapsed"></i>
+      </a>
+      <ul class="nav-content" [ngClass]="{ 'collapse': true, 'show': !isBillingCollapsed }">
+        <li>
+          <a routerLink="admin/billing" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>All Invoices</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="admin/billing/create" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>Generate Invoice</span>
+          </a>
+        </li>
+      
+      </ul>
+    </li>
+
+   
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/reports/appointments" (click)="closeSidebar()">
+        <i class="bi bi-graph-up"></i>
+        <span>Appointment Statistics</span>
+      </a>
+    </li>
+
+  </ul>
+  <div class="sidebar-signout" *ngIf="isMobile">
+    <a (click)="signOut(); closeSidebar();" class="btn btn-primary appointment-btn loginBtn w-100 mt-4">
+      <i class="bi bi-box-arrow-right me-2"></i>
+      Sign Out
+    </a>
+  </div>
+</aside>
+
+<!-- CLIENT SIDEBAR -->
+<aside 
+  id="sidebar" 
+  class="sidebar" 
+  *ngIf="!isAdmin"
+  [class.sidebar-open]="isSidebarOpen"
+  [class.sidebar-mobile]="isMobile"
+>
+  <ul class="sidebar-nav" id="sidebar-nav">
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/dashboard" (click)="closeSidebar()">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" (click)="isAppointmentCollapsed = !isAppointmentCollapsed">
+        <i class="bi bi-journal-text"></i>
+        <span>Appointment</span>
+        <i class="bi bi-chevron-down ms-auto" [class.bi-chevron-up]="!isAppointmentCollapsed"></i>
+      </a>
+      <ul class="nav-content" [ngClass]="{ 'collapse': true, 'show': !isAppointmentCollapsed }">
+        <li>
+          <a routerLink="/my-appointments" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>My Appointments</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/my-appointments/add" (click)="closeSidebar()">
+            <i class="bi bi-circle"></i><span>Book New Appointment</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/profile" (click)="closeSidebar()">
+        <i class="bi bi-heart"></i>
+        <span>Pet Details</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/user-profile" (click)="closeSidebar()">
+        <i class="bi bi-person"></i>
+        <span>My Profile</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/payments" (click)="closeSidebar()">
+        <i class="bi bi-card-list"></i>
+        <span>Invoices & Payments</span>
+      </a>
+    </li>
+
+    <!-- Removed Contact, FAQ, Disease Checker for user dashboard -->
+
+  </ul>
+  <div class="sidebar-signout" *ngIf="isMobile">
+    <a (click)="signOut(); closeSidebar();" class="btn btn-primary appointment-btn loginBtn w-100 mt-4">
+      <i class="bi bi-box-arrow-right me-2"></i>
+      Sign Out
+    </a>
+  </div>
+</aside>

@@ -1,0 +1,4 @@
+<app-header *ngIf="!isDashboard"></app-header>
+<div class="nav-spacer" *ngIf="!isDashboard"></div>
+<router-outlet></router-outlet>
+<app-footer *ngIf="!isDashboard"></app-footer>
